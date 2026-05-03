@@ -1,9 +1,17 @@
-# Ignore the large intermediate files
+# Security
+.env
+
+# Large Data & Logs
+data/
+logs/
 *.parquet
 temp_processing.csv
 *_quality_report.txt
-logs/
 
-# Allow these new folders
+# Python/OS junk
+__pycache__/
+.DS_Store
+
+# Exceptions
 !samples/dirty_taxi_feb.csv
 !scripts/generate_dirty_data.py
