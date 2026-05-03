@@ -54,7 +54,6 @@ def validator_task():
     df['fare_amount'] = pd.to_numeric(df['fare_amount'], errors='coerce')
 
     # 2. Rule-based cleaning
-    initial_count = len(df)
     # Drop rows where critical values are NaN 
     df = df.dropna(subset=['passenger_count', 'trip_distance', 'fare_amount'])
 
