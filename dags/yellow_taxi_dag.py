@@ -37,7 +37,7 @@ def validator_task():
     df = pd.read_parquet(RAW_OUTPUT)
     total_rows = len(df)
 
-    # Cast types
+    # Cast types to avoid crashes
     df['fare_amount'] = pd.to_numeric(df['fare_amount'], errors='coerce')
     df['trip_distance'] = pd.to_numeric(df['trip_distance'], errors='coerce')
     
@@ -162,8 +162,6 @@ def backup_validator_task():
         print(f"Azure upload failed: {e}")
         raise
     
-
-
 #  DAG Definition 
 
 default_args = {
@@ -176,8 +174,7 @@ with DAG(
     dag_id='yellow_taxi_pipeline',
     default_args=default_args,
     description='NYC Taxi Batch Processing Pipeline',
-    # SET YOUR DEFENSE DATE HERE:
-    start_date=datetime(2026, 4, 1), 
+    start_date=datetime(2026, 5, 1), 
     schedule='@once',
     catchup=False
 ) as dag:
