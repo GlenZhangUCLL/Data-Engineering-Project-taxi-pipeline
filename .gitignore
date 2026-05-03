@@ -1,0 +1,8 @@
+data/
+logs/
+plugins/__pycache__/
+dags/__pycache__/
+*.parquet
+*.csv
+*.txt
+.DS_Store
