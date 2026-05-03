@@ -31,7 +31,7 @@ def reader_task():
     if not files:
         raise FileNotFoundError(f"No CSV files found in {INPUT_FOLDER}")
 
-    # 2. Pick the first one it finds (or the most recent)
+    # 2. Pick the first one it finds
     file_path = files[0] 
     print(f"Reading found file: {file_path}...")
     
