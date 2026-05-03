@@ -6,33 +6,42 @@ from datetime import datetime, timedelta
 import pandas as pd
 import numpy as np
 import os
+import glob
 
 
 #  Configurations 
 DATA_DIR = "/opt/airflow/data"
 INPUT_FOLDER = f"{DATA_DIR}/input_monitor"
 LOCAL_OUTPUT_FOLDER = f"{DATA_DIR}/output_local"
-# The sensor looks for any CSV in the monitor folder
+# The sensor looks any CSV in the monitor folder
 TARGET_FILE_PATTERN = "dirty_taxi_feb.csv"
 
 # Intermediate files
 PROCESSING_FILE = f"{DATA_DIR}/temp_processing.csv"
 
 #  Task Functions 
+
 def reader_task():
     if not os.path.exists(INPUT_FOLDER):
         os.makedirs(INPUT_FOLDER)
 
-    file_path = f"{INPUT_FOLDER}/{TARGET_FILE_PATTERN}"
-    print(f"Reading {file_path}...")
+    # 1. Search for any file ending in .csv in the input folder
+    files = glob.glob(f"{INPUT_FOLDER}/*.csv")
+    
+    if not files:
+        raise FileNotFoundError(f"No CSV files found in {INPUT_FOLDER}")
+
+    # 2. Pick the first one it finds (or the most recent)
+    file_path = files[0] 
+    print(f"Reading found file: {file_path}...")
+    
     df = pd.read_csv(file_path)
 
-    #Handle empty files
     if df.empty:
-        raise ValueError("The uploaded CSV is empty! Stopping pipeline.")
+        raise ValueError(f"The file {file_path} is empty! Stopping pipeline.")
     
     df.to_csv(PROCESSING_FILE, index=False)
-    print(f"Loaded {len(df)} rows.")
+    print(f"Loaded {len(df)} rows from {os.path.basename(file_path)}.")
 
 def validator_task():
     print("Running Detailed Validation...")
