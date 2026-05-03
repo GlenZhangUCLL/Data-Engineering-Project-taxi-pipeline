@@ -1,8 +1,9 @@
-data/
-logs/
-plugins/__pycache__/
-dags/__pycache__/
+# Ignore the large intermediate files
 *.parquet
-*.csv
-*.txt
-.DS_Store
+temp_processing.csv
+*_quality_report.txt
+logs/
+
+# Allow these new folders
+!samples/dirty_taxi_feb.csv
+!scripts/generate_dirty_data.py
