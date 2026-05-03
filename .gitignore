@@ -1,8 +1,17 @@
+# Security
+.env
+
+# Large Data & Logs
 data/
 logs/
-plugins/__pycache__/
-dags/__pycache__/
 *.parquet
-*.csv
-*.txt
+temp_processing.csv
+*_quality_report.txt
+
+# Python/OS junk
+__pycache__/
 .DS_Store
+
+# Exceptions
+!samples/dirty_taxi_feb.csv
+!scripts/generate_dirty_data.py
